@@ -429,7 +429,6 @@ RD3 = [0, 0, 0, 0]
 Site: 3 entered CS 4 times
 Site: 3 completed execution
 
-# Author:
-**Sanjeev Majumdar (2021mt12007)** 
-
-***
+#######
+By Hitesh Kumar - 2021MT12387
+*******
