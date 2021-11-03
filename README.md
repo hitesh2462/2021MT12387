@@ -83,7 +83,7 @@
 		
 # Evaluation of the output: 
 	1. Observe REQUEST and REPLY messages based on the algorithm's condition to enter-exit CS. 
-	2. Observe requests getting deferred when the receiving site in CS or itself requesting with lesser timestamp or same timestamp but the id is less than 		   the requesting site id.
+	2. Observe requests getting deferred when the receiving site in CS or itself requesting with lesser timestamp or same timestamp but the id is less than the requesting site id.
 	3. Observe requests deferred array (RD<site_id>) of each site whenver a request is replied or deferred.
 	4. Observe the respective site entering-exiting CS along with the timestamps.
 	5. Observe how many times a respective site entered CS.
