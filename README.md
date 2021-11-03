@@ -1,4 +1,4 @@
-# SSZG526 DISTRIBUTED COMPUTING ASSIGNMENT (EC-1) 
+# SSZG526 Assignment (Distributed Computing) 
 # Write a program to implement the Ricart-Agrawala algorithm for implementing distributed mutual exclusion. Assume the communication channels to be FIFO in nature.  
 
 ***
@@ -52,383 +52,194 @@
 	For demonstration each Site requests for entering the Critical Section for a predefined number. Once a Site enters the Critical Section it exits from there after a defined time duration.
 
 # Compiling and Running the program with the user inputs:
-	1. Open a linux terminal and navigate to the project location wherever its placed in the linux system.
-	   e.g. user@localhost:~$ cd /home/user/DME/Ricart-Agrawala-DME/
+	1. Connect to the Linux VM (ubuntu in this case) and switch to "~/home/vmadmin/2021MT12387" (this is where program files are present)
+		vmadmin@linux-vm: ~/home/vmadmin/2021MT12387
 	
-	2. Ensure `config.txt` is present in the location navigated in the step 1.
-	3. Define the number of Sites `N` on the first line of `config.txt` file.
+	2. Validate that the `config.txt` is present in the present directory
+
+	3. Define the number of Sites as N in the config file
+
 	4. Define site id (starting from 0) and port number (e.g. 5001) for each site linewise in the `config.txt` file.
-	   e.g. 4
+	 	3
   		0 5001
  		1 6001
  		2 7001
- 		3 8001
+ 		
+	5. Compile and Run the program by executing javac RA.java on the Linux VM
+		vmadmin@linux-vm:~/2021MT12387$ javac RA.java
 
-	5. Compile the program by typing `javac RA.java` in the opened terminal.
-	   e.g. user@localhost:~/DME/Ricart-Agrawala-DME$ javac RA.java 
-
-	6. Set up sites in `N` different terminals by typing `java RA <site id> <number_of_times_to_enter_cs>` in each.
-	   e.g.
-		***
-		java RA 0 4
-		***
-		***
-		java RA 1 4
-		***
-		***
-		java RA 2 4
-		***
-		***
-		java RA 3 4
-		***
-
+	6. Set up sites in 3 different terminals
+	   
+		---------------
+		java RA 0 3
+		---------------
+		java RA 1 3
+		---------------
+		java RA 2 3
+		---------------
+		
 # Evaluation of the output: 
-	1. Observe the terminal/console prints showing REQUEST and REPLY messages based on the algorithm's condition to enter-exit CS. 
-	2. Observe the terminal/console prints showing request getting deferred when the receiving site in CS or itself requesting with lesser timestamp or same timestamp but the id is less than 		   the requesting site id.
-	3. Observe the terminal/console prints for request deferred array (RD<site_id>) of each site whenver a request is replied or deferred.
-	4. Observe the terminal/console prints for the respective site entering-exiting CS along with the timestamps.
-	5. Observe the terminal/console prints showing how many times a respective site entered CS.
+	1. Observe REQUEST and REPLY messages based on the algorithm's condition to enter-exit CS. 
+	2. Observe requests getting deferred when the receiving site in CS or itself requesting with lesser timestamp or same timestamp but the id is less than 		   the requesting site id.
+	3. Observe requests deferred array (RD<site_id>) of each site whenver a request is replied or deferred.
+	4. Observe the respective site entering-exiting CS along with the timestamps.
+	5. Observe how many times a respective site entered CS.
 
 # Sample output:
 
 ## Site 0:
-user@localhost:~/DME/Ricart-Agrawala-DME$ java RA 0 4
-Max number of Sites in the current setup: 4
-RD0 = [0, 0, 0, 0]
+vmadmin@linux-vm:~/2021MT12387$ java RA 0 3
+Max number of Sites in the current setup: 3
+RD0 = [0, 0, 0]
 Server Listening @6001
 Server Listening @7001
-Server Listening @8001
-Connection Accepted @7001
 Connection Accepted @6001
-Connection Accepted @8001
+Connection Accepted @7001
 Sent REQUEST(1, 0) to Site: 1
 Sent REQUEST(1, 0) to Site: 2
-Sent REQUEST(1, 0) to Site: 3
-Received REQUEST(1, 2) from Site: 2
-Request from Site: 2 is deferred. Request ts: 1
-RD0 = [0, 0, 1, 0]
-Received REQUEST(1, 1) from Site: 1
-Request from Site: 1 is deferred. Request ts: 1
-RD0 = [0, 1, 1, 0]
 Received reply from Site: 1
-Received REQUEST(1, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 1
-RD0 = [0, 1, 1, 1]
+Received REQUEST(2, 1) from Site: 1
+Request from Site: 1 is deferred. Request ts: 2
+RD0 = [0, 1, 0]
 Received reply from Site: 2
-Received reply from Site: 3
-Site: 0 entered Critical Section @ 2021-10-23 21:56:39.026
-Site: 0 exited Critical Section @ 2021-10-23 21:56:41.067
-RD0 = [0, 1, 1, 1]
+Site: 0 entered Critical Section @ 2021-11-03 06:22:35.094
+Received REQUEST(3, 2) from Site: 2
+Request from Site: 2 is deferred. Request ts: 3
+RD0 = [0, 1, 1]
+Site: 0 exited Critical Section @ 2021-11-03 06:22:37.105
+RD0 = [0, 1, 1]
 Sent reply to Site: 1
 Sent reply to Site: 2
-Sent reply to Site: 3
-RD0 = [0, 0, 0, 0]
-Sent REQUEST(2, 0) to Site: 1
-Sent REQUEST(2, 0) to Site: 2
-Sent REQUEST(2, 0) to Site: 3
-Received reply from Site: 2
+RD0 = [0, 0, 0]
+Sent REQUEST(4, 0) to Site: 1
+Sent REQUEST(4, 0) to Site: 2
 Received reply from Site: 1
-Received REQUEST(3, 1) from Site: 1
-Request from Site: 1 is deferred. Request ts: 3
-RD0 = [0, 1, 0, 0]
-Received reply from Site: 3
-Site: 0 entered Critical Section @ 2021-10-23 21:56:59.104
-Site: 0 exited Critical Section @ 2021-10-23 21:57:01.109
-RD0 = [0, 1, 0, 0]
-Sent reply to Site: 1
-RD0 = [0, 0, 0, 0]
-Received REQUEST(4, 2) from Site: 2
-Sent reply to Site: 2
-Received REQUEST(5, 3) from Site: 3
-Sent reply to Site: 3
-Sent REQUEST(6, 0) to Site: 1
-Sent REQUEST(6, 0) to Site: 2
-Sent REQUEST(6, 0) to Site: 3
 Received reply from Site: 2
-Received reply from Site: 1
-Received REQUEST(7, 1) from Site: 1
-Request from Site: 1 is deferred. Request ts: 7
-RD0 = [0, 1, 0, 0]
-Received reply from Site: 3
-Site: 0 entered Critical Section @ 2021-10-23 21:57:19.179
-Site: 0 exited Critical Section @ 2021-10-23 21:57:21.179
-RD0 = [0, 1, 0, 0]
+Site: 0 entered Critical Section @ 2021-11-03 06:22:50.157
+Site: 0 exited Critical Section @ 2021-11-03 06:22:52.157
+RD0 = [0, 0, 0]
+RD0 = [0, 0, 0]
+Received REQUEST(5, 1) from Site: 1
 Sent reply to Site: 1
-RD0 = [0, 0, 0, 0]
-Received REQUEST(8, 2) from Site: 2
+Received REQUEST(6, 2) from Site: 2
 Sent reply to Site: 2
-Received REQUEST(9, 3) from Site: 3
-Sent reply to Site: 3
-Sent REQUEST(10, 0) to Site: 1
-Sent REQUEST(10, 0) to Site: 2
-Sent REQUEST(10, 0) to Site: 3
+Sent REQUEST(7, 0) to Site: 1
+Sent REQUEST(7, 0) to Site: 2
+Received reply from Site: 1
 Received reply from Site: 2
-Received reply from Site: 1
-Received REQUEST(11, 1) from Site: 1
-Request from Site: 1 is deferred. Request ts: 11
-RD0 = [0, 1, 0, 0]
-Received reply from Site: 3
-Site: 0 entered Critical Section @ 2021-10-23 21:57:39.253
-Site: 0 exited Critical Section @ 2021-10-23 21:57:41.261
-RD0 = [0, 1, 0, 0]
+Site: 0 entered Critical Section @ 2021-11-03 06:23:10.23
+Site: 0 exited Critical Section @ 2021-11-03 06:23:12.23
+RD0 = [0, 0, 0]
+RD0 = [0, 0, 0]
+Received REQUEST(8, 1) from Site: 1
 Sent reply to Site: 1
-RD0 = [0, 0, 0, 0]
-Received REQUEST(12, 2) from Site: 2
+Received REQUEST(9, 2) from Site: 2
 Sent reply to Site: 2
-Received REQUEST(13, 3) from Site: 3
-Sent reply to Site: 3
-Site: 0 entered CS 4 times
+Site: 0 entered CS 3 times
 Site: 0 completed execution
 
 ## Site 1:
-user@localhost:~/DME/Ricart-Agrawala-DME$ java RA 1 4
-Max number of Sites in the current setup: 4
-RD1 = [0, 0, 0, 0]
+vmadmin@linux-vm:~/2021MT12387$ java RA 1 3
+Max number of Sites in the current setup: 3
+RD1 = [0, 0, 0]
 Server Listening @5002
 Server Listening @7002
-Server Listening @8002
-Connection Accepted @7002
-Connection Accepted @8002
 Connection Accepted @5002
-Sent REQUEST(1, 1) to Site: 0
-Sent REQUEST(1, 1) to Site: 2
-Sent REQUEST(1, 1) to Site: 3
+Connection Accepted @7002
 Received REQUEST(1, 0) from Site: 0
 Sent reply to Site: 0
-Received REQUEST(1, 2) from Site: 2
-Request from Site: 2 is deferred. Request ts: 1
-RD1 = [0, 0, 1, 0]
-Received REQUEST(1, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 1
-RD1 = [0, 0, 1, 1]
-Received reply from Site: 3
+Sent REQUEST(2, 1) to Site: 0
+Sent REQUEST(2, 1) to Site: 2
 Received reply from Site: 2
+Received REQUEST(3, 2) from Site: 2
+Request from Site: 2 is deferred. Request ts: 3
+RD1 = [0, 0, 1]
 Received reply from Site: 0
-Site: 1 entered Critical Section @ 2021-10-23 21:56:45.342
-Site: 1 exited Critical Section @ 2021-10-23 21:56:47.364
-RD1 = [0, 0, 1, 1]
+Site: 1 entered Critical Section @ 2021-11-03 06:22:38.8
+Site: 1 exited Critical Section @ 2021-11-03 06:22:40.807
+RD1 = [0, 0, 1]
 Sent reply to Site: 2
-Sent reply to Site: 3
-RD1 = [0, 0, 0, 0]
-Received REQUEST(2, 0) from Site: 0
+RD1 = [0, 0, 0]
+Received REQUEST(4, 0) from Site: 0
 Sent reply to Site: 0
-Sent REQUEST(3, 1) to Site: 0
-Sent REQUEST(3, 1) to Site: 2
-Sent REQUEST(3, 1) to Site: 3
-Received reply from Site: 3
+Sent REQUEST(5, 1) to Site: 0
+Sent REQUEST(5, 1) to Site: 2
 Received reply from Site: 2
-Received REQUEST(4, 2) from Site: 2
-Request from Site: 2 is deferred. Request ts: 4
-RD1 = [0, 0, 1, 0]
 Received reply from Site: 0
-Site: 1 entered Critical Section @ 2021-10-23 21:57:05.415
-Site: 1 exited Critical Section @ 2021-10-23 21:57:07.415
-RD1 = [0, 0, 1, 0]
+Site: 1 entered Critical Section @ 2021-11-03 06:22:58.867
+Received REQUEST(6, 2) from Site: 2
+Request from Site: 2 is deferred. Request ts: 6
+RD1 = [0, 0, 1]
+Site: 1 exited Critical Section @ 2021-11-03 06:23:00.867
+RD1 = [0, 0, 1]
 Sent reply to Site: 2
-RD1 = [0, 0, 0, 0]
-Received REQUEST(5, 3) from Site: 3
-Sent reply to Site: 3
-Received REQUEST(6, 0) from Site: 0
+RD1 = [0, 0, 0]
+Received REQUEST(7, 0) from Site: 0
 Sent reply to Site: 0
-Sent REQUEST(7, 1) to Site: 0
-Sent REQUEST(7, 1) to Site: 2
-Sent REQUEST(7, 1) to Site: 3
-Received reply from Site: 3
+Sent REQUEST(8, 1) to Site: 0
+Sent REQUEST(8, 1) to Site: 2
 Received reply from Site: 2
-Received REQUEST(8, 2) from Site: 2
-Request from Site: 2 is deferred. Request ts: 8
-RD1 = [0, 0, 1, 0]
 Received reply from Site: 0
-Site: 1 entered Critical Section @ 2021-10-23 21:57:25.507
-Site: 1 exited Critical Section @ 2021-10-23 21:57:27.536
-RD1 = [0, 0, 1, 0]
+Site: 1 entered Critical Section @ 2021-11-03 06:23:18.938
+Received REQUEST(9, 2) from Site: 2
+Request from Site: 2 is deferred. Request ts: 9
+RD1 = [0, 0, 1]
+Site: 1 exited Critical Section @ 2021-11-03 06:23:20.938
+RD1 = [0, 0, 1]
 Sent reply to Site: 2
-RD1 = [0, 0, 0, 0]
-Received REQUEST(9, 3) from Site: 3
-Sent reply to Site: 3
-Received REQUEST(10, 0) from Site: 0
-Sent reply to Site: 0
-Sent REQUEST(11, 1) to Site: 0
-Sent REQUEST(11, 1) to Site: 2
-Sent REQUEST(11, 1) to Site: 3
-Received reply from Site: 3
-Received reply from Site: 2
-Received REQUEST(12, 2) from Site: 2
-Request from Site: 2 is deferred. Request ts: 12
-RD1 = [0, 0, 1, 0]
-Received reply from Site: 0
-Site: 1 entered Critical Section @ 2021-10-23 21:57:45.659
-Site: 1 exited Critical Section @ 2021-10-23 21:57:47.66
-RD1 = [0, 0, 1, 0]
-Sent reply to Site: 2
-RD1 = [0, 0, 0, 0]
-Received REQUEST(13, 3) from Site: 3
-Sent reply to Site: 3
-Site: 1 entered CS 4 times
+RD1 = [0, 0, 0]
+Site: 1 entered CS 3 times
 Site: 1 completed execution
 
 ## Site 2:
-user@localhost:~/DME/Ricart-Agrawala-DME$ java RA 2 4
-Max number of Sites in the current setup: 4
-RD2 = [0, 0, 0, 0]
+vmadmin@linux-vm:~/2021MT12387$ java RA 2 3
+Max number of Sites in the current setup: 3
+RD2 = [0, 0, 0]
 Server Listening @5003
 Server Listening @6003
-Server Listening @8003
-Connection Accepted @6003
-Connection Accepted @8003
 Connection Accepted @5003
-Sent REQUEST(1, 2) to Site: 0
-Sent REQUEST(1, 2) to Site: 1
-Sent REQUEST(1, 2) to Site: 3
-Received REQUEST(1, 1) from Site: 1
-Sent reply to Site: 1
-Received REQUEST(1, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 1
-RD2 = [0, 0, 0, 1]
-Received reply from Site: 3
+Connection Accepted @6003
 Received REQUEST(1, 0) from Site: 0
 Sent reply to Site: 0
-Received reply from Site: 0
-Received reply from Site: 1
-Site: 2 entered Critical Section @ 2021-10-23 21:56:48.096
-Site: 2 exited Critical Section @ 2021-10-23 21:56:50.123
-RD2 = [0, 0, 0, 1]
-Sent reply to Site: 3
-RD2 = [0, 0, 0, 0]
-Received REQUEST(2, 0) from Site: 0
-Sent reply to Site: 0
-Received REQUEST(3, 1) from Site: 1
+Received REQUEST(2, 1) from Site: 1
 Sent reply to Site: 1
-Sent REQUEST(4, 2) to Site: 0
-Sent REQUEST(4, 2) to Site: 1
-Sent REQUEST(4, 2) to Site: 3
-Received reply from Site: 3
+Sent REQUEST(3, 2) to Site: 0
+Sent REQUEST(3, 2) to Site: 1
 Received reply from Site: 0
 Received reply from Site: 1
-Site: 2 entered Critical Section @ 2021-10-23 21:57:08.187
-Received REQUEST(5, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 5
-RD2 = [0, 0, 0, 1]
-Site: 2 exited Critical Section @ 2021-10-23 21:57:10.188
-RD2 = [0, 0, 0, 1]
-Sent reply to Site: 3
-RD2 = [0, 0, 0, 0]
-Received REQUEST(6, 0) from Site: 0
+Site: 2 entered Critical Section @ 2021-11-03 06:22:44.439
+Site: 2 exited Critical Section @ 2021-11-03 06:22:46.447
+RD2 = [0, 0, 0]
+RD2 = [0, 0, 0]
+Received REQUEST(4, 0) from Site: 0
 Sent reply to Site: 0
-Received REQUEST(7, 1) from Site: 1
+Received REQUEST(5, 1) from Site: 1
 Sent reply to Site: 1
-Sent REQUEST(8, 2) to Site: 0
-Sent REQUEST(8, 2) to Site: 1
-Sent REQUEST(8, 2) to Site: 3
-Received reply from Site: 3
+Sent REQUEST(6, 2) to Site: 0
+Sent REQUEST(6, 2) to Site: 1
 Received reply from Site: 0
+Received REQUEST(7, 0) from Site: 0
+Request from Site: 0 is deferred. Request ts: 7
+RD2 = [1, 0, 0]
 Received reply from Site: 1
-Site: 2 entered Critical Section @ 2021-10-23 21:57:28.274
-Received REQUEST(9, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 9
-RD2 = [0, 0, 0, 1]
-Site: 2 exited Critical Section @ 2021-10-23 21:57:30.275
-RD2 = [0, 0, 0, 1]
-Sent reply to Site: 3
-RD2 = [0, 0, 0, 0]
-Received REQUEST(10, 0) from Site: 0
+Site: 2 entered Critical Section @ 2021-11-03 06:23:04.508
+Site: 2 exited Critical Section @ 2021-11-03 06:23:06.508
+RD2 = [1, 0, 0]
 Sent reply to Site: 0
-Received REQUEST(11, 1) from Site: 1
+RD2 = [0, 0, 0]
+Received REQUEST(8, 1) from Site: 1
 Sent reply to Site: 1
-Sent REQUEST(12, 2) to Site: 0
-Sent REQUEST(12, 2) to Site: 1
-Sent REQUEST(12, 2) to Site: 3
-Received reply from Site: 3
+Sent REQUEST(9, 2) to Site: 0
+Sent REQUEST(9, 2) to Site: 1
 Received reply from Site: 0
 Received reply from Site: 1
-Site: 2 entered Critical Section @ 2021-10-23 21:57:48.359
-Received REQUEST(13, 3) from Site: 3
-Request from Site: 3 is deferred. Request ts: 13
-RD2 = [0, 0, 0, 1]
-Site: 2 exited Critical Section @ 2021-10-23 21:57:50.36
-RD2 = [0, 0, 0, 1]
-Sent reply to Site: 3
-RD2 = [0, 0, 0, 0]
-Site: 2 entered CS 4 times
+Site: 2 entered Critical Section @ 2021-11-03 06:23:24.579
+Site: 2 exited Critical Section @ 2021-11-03 06:23:26.579
+RD2 = [0, 0, 0]
+RD2 = [0, 0, 0]
+Site: 2 entered CS 3 times
 Site: 2 completed execution
 
-## Site 3:
-user@localhost:~/DME/Ricart-Agrawala-DME$ java RA 3 4
-Max number of Sites in the current setup: 4
-RD3 = [0, 0, 0, 0]
-Server Listening @5004
-Server Listening @6004
-Server Listening @7004
-Connection Accepted @7004
-Connection Accepted @6004
-Connection Accepted @5004
-Sent REQUEST(1, 3) to Site: 0
-Sent REQUEST(1, 3) to Site: 1
-Sent REQUEST(1, 3) to Site: 2
-Received REQUEST(1, 2) from Site: 2
-Sent reply to Site: 2
-Received REQUEST(1, 1) from Site: 1
-Sent reply to Site: 1
-Received REQUEST(1, 0) from Site: 0
-Sent reply to Site: 0
-Received reply from Site: 0
-Received reply from Site: 1
-Received reply from Site: 2
-Site: 3 entered Critical Section @ 2021-10-23 21:56:52.29
-Site: 3 exited Critical Section @ 2021-10-23 21:56:54.316
-RD3 = [0, 0, 0, 0]
-RD3 = [0, 0, 0, 0]
-Received REQUEST(2, 0) from Site: 0
-Sent reply to Site: 0
-Received REQUEST(3, 1) from Site: 1
-Sent reply to Site: 1
-Received REQUEST(4, 2) from Site: 2
-Sent reply to Site: 2
-Sent REQUEST(5, 3) to Site: 0
-Sent REQUEST(5, 3) to Site: 1
-Sent REQUEST(5, 3) to Site: 2
-Received reply from Site: 0
-Received reply from Site: 2
-Received reply from Site: 1
-Site: 3 entered Critical Section @ 2021-10-23 21:57:13.128
-Site: 3 exited Critical Section @ 2021-10-23 21:57:15.129
-RD3 = [0, 0, 0, 0]
-RD3 = [0, 0, 0, 0]
-Received REQUEST(6, 0) from Site: 0
-Sent reply to Site: 0
-Received REQUEST(7, 1) from Site: 1
-Sent reply to Site: 1
-Received REQUEST(8, 2) from Site: 2
-Sent reply to Site: 2
-Sent REQUEST(9, 3) to Site: 0
-Sent REQUEST(9, 3) to Site: 1
-Sent REQUEST(9, 3) to Site: 2
-Received reply from Site: 0
-Received reply from Site: 2
-Received reply from Site: 1
-Site: 3 entered Critical Section @ 2021-10-23 21:57:33.208
-Site: 3 exited Critical Section @ 2021-10-23 21:57:35.209
-RD3 = [0, 0, 0, 0]
-RD3 = [0, 0, 0, 0]
-Received REQUEST(10, 0) from Site: 0
-Sent reply to Site: 0
-Received REQUEST(11, 1) from Site: 1
-Sent reply to Site: 1
-Received REQUEST(12, 2) from Site: 2
-Sent reply to Site: 2
-Sent REQUEST(13, 3) to Site: 0
-Sent REQUEST(13, 3) to Site: 1
-Sent REQUEST(13, 3) to Site: 2
-Received reply from Site: 0
-Received reply from Site: 2
-Received reply from Site: 1
-Site: 3 entered Critical Section @ 2021-10-23 21:57:53.284
-Site: 3 exited Critical Section @ 2021-10-23 21:57:55.284
-RD3 = [0, 0, 0, 0]
-RD3 = [0, 0, 0, 0]
-Site: 3 entered CS 4 times
-Site: 3 completed execution
-
-#######
-By Hitesh Kumar - 2021MT12387
+#
+Hitesh Kumar - 2021MT12387
 *******
