@@ -12,6 +12,9 @@
 # Other Packages:
 	java.util, java.io, java.net (for TCP socket communication), java.sql.Timestamp (for timestamp) 
 
+# Caution
+	Both the program and configuration file must be kept in the same directory for the code to run without any errors
+
 
 # Overview of the Algorithm (N Sites in the Distributed System):
 	1. Two type of messages (REQUEST and REPLY) are used.
@@ -242,4 +245,5 @@ Site: 2 completed execution
 
 #
 Hitesh Kumar - 2021MT12387
+Repo - https://github.com/hitesh2462/2021MT12387
 *******
